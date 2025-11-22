@@ -2,10 +2,13 @@ import * as React from "react";
 import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import { FaUsers } from "react-icons/fa";
-import { MdDeleteOutline, MdStarRate } from "react-icons/md";
+import { FaEye, FaUsers } from "react-icons/fa";
+import {
+  MdDeleteOutline,
+  MdOutlineUnpublished,
+  MdStarRate,
+} from "react-icons/md";
 import { FcCancel } from "react-icons/fc";
-import { ToastContainer } from "react-toastify";
 import { githubRepoType, ProjectType } from "@/Redux/Types";
 import { useDeleteRepoMutation } from "@/Redux/slices/github/githubApi";
 import { useAlert } from "./hooks/useAlert";
@@ -14,32 +17,43 @@ import {
   useDeployGithubRepoMutation,
   useImportGithubRepoMutation,
 } from "@/Redux/slices/vercel/vercelApi";
-import { useAddProjectMutation } from "@/Redux/slices/Project/projectApi";
+import {
+  useAddProjectMutation,
+  useDeleteProjectMutation,
+} from "@/Redux/slices/Project/projectApi";
+import { useRouter } from "next/navigation";
 
 export default function MenuDots({
   repo,
+  portfolioProjectId,
   refetch,
   liveLink,
   isDeployed,
+  isInPortfolio,
 }: {
   repo: githubRepoType;
+  portfolioProjectId: string;
   liveLink: string | null;
   refetch: () => void;
   isDeployed: boolean;
+  isInPortfolio: boolean;
 }) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
+  const router = useRouter();
   const { confirm } = useConfirm();
+
+  console.log(isInPortfolio);
 
   const [deleteRepo] = useDeleteRepoMutation();
   const [importGithubRepo] = useImportGithubRepoMutation();
   const [deployGithubRepo] = useDeployGithubRepoMutation();
   const [addProject] = useAddProjectMutation();
+  const [deleteProject] = useDeleteProjectMutation();
   const { showError, showSuccess } = useAlert();
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
-    console.log(repo);
   };
 
   const handleClose = () => {
@@ -133,17 +147,40 @@ export default function MenuDots({
         description: data.description,
         githubUrl: data.githubUrl,
         vercelUrl: data.vercelUrl,
-        image: data.image,
         isDeployed: data.isDeployed,
-        isFeatured: data.isFeatured,
-        isProfiled: data.isProfiled,
-        isComplete: data.isComplete,
+        language: data.language,
       });
-      showSuccess(`${name} will be Deploy successfully within 1-2 minutes`);
+      showSuccess(`${data.name} Added successfully to Portfolio`);
       refetch();
     } catch (error) {
       console.log("Failed to Deploy repo", error);
       showError(`Failed to Deploy ${name}`);
+    }
+  };
+
+  const handleDeleteFromPortfolio = async ({
+    portfolioProjectId,
+  }: {
+    portfolioProjectId: string;
+  }) => {
+    handleClose();
+    const ok = await confirm({
+      title: "Delete Project from Portfolio?",
+      text: `Are you sure you want to delete the project "${repo.name} from Portfolio"?`,
+      icon: "warning",
+      confirmButtonText: "Yes, Delete",
+      cancelButtonText: "Cancel",
+    });
+
+    if (!ok) return;
+
+    try {
+      await deleteProject({ projectId: portfolioProjectId }).unwrap();
+      showSuccess(`${repo.name} deleted successfully from Portfolio`);
+      refetch();
+    } catch (error) {
+      console.log("Failed to delete project from portfolio", error);
+      showError(`Failed to delete ${repo.name} from Portfolio`);
     }
   };
   return (
@@ -181,19 +218,28 @@ export default function MenuDots({
           },
         }}
       >
+        <MenuItem
+          onClick={() =>
+            router.push(`/dashboard/projects/myProjects/${repo.id}`)
+          }
+        >
+          View Details <FaEye />
+        </MenuItem>
+
         {isDeployed ? (
           <MenuItem
-            onClick={() =>
-              handleDeployRepo({
-                name: repo.name,
-                repoName: repo.name,
-                owner: repo.owner?.login,
-                branch: repo.default_branch,
-                repoId: repo.id,
-              })
-            }
+            // onClick={() =>
+            //   handleDeployRepo({
+            //     name: repo.name,
+            //     repoName: repo.name,
+            //     owner: repo.owner?.login,
+            //     branch: repo.default_branch,
+            //     repoId: repo.id,
+            //   })
+            // }
+            sx={{ color: "red" }}
           >
-            cancel Deploy <FcCancel />
+            cancel Deploy <MdOutlineUnpublished />
           </MenuItem>
         ) : (
           <MenuItem
@@ -210,25 +256,36 @@ export default function MenuDots({
             Deploy <FaUsers />
           </MenuItem>
         )}
-        <MenuItem
-          onClick={() =>
-            handleAddProject({
-              data: {
-                name: repo.name,
-                description: repo.description ?? "",
-                githubUrl: repo.html_url,
-                vercelUrl: liveLink ?? "",
-                image: coverImage ?? "",
-                isDeployed: Boolean(liveLink),
-                isFeatured: false,
-                isProfiled: false,
-                isComplete: false,
-              },
-            })
-          }
-        >
-          add to portfolio <MdStarRate />
-        </MenuItem>
+        {isInPortfolio ? (
+          <MenuItem
+            onClick={() =>
+              handleDeleteFromPortfolio({
+                portfolioProjectId,
+              })
+            }
+            sx={{ color: "red" }}
+          >
+            Delete from portfolio <FcCancel />
+          </MenuItem>
+        ) : (
+          <MenuItem
+            onClick={() =>
+              handleAddProject({
+                data: {
+                  name: repo.name,
+                  description: repo.description ?? "",
+                  githubUrl: repo.html_url,
+                  vercelUrl: liveLink ?? "",
+                  isDeployed: Boolean(liveLink),
+                  language: repo.language ?? "",
+                },
+              })
+            }
+          >
+            Add to portfolio <MdStarRate />
+          </MenuItem>
+        )}
+
         <MenuItem
           onClick={() =>
             handleDeleteRepo({ owner: repo.owner?.login, repoName: repo.name })
@@ -242,8 +299,6 @@ export default function MenuDots({
           Delete Repo <MdDeleteOutline />
         </MenuItem>
       </Menu>
-
-      <ToastContainer />
     </div>
   );
 }

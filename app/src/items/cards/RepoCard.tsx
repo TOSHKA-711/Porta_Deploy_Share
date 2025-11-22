@@ -1,23 +1,27 @@
-import { githubRepoType } from "@/Redux/Types";
+import { githubRepoType, ProjectType } from "@/Redux/Types";
 import React from "react";
 import MenuDots from "../MenuDots";
-import { useRouter } from "next/navigation";
+
 
 const RepoCard = ({
   repo,
   isDeployed,
   liveLink,
   refetch,
+  isInPortfolio,
+  portfolioProjectId
 }: {
   repo: githubRepoType;
+  portfolioProjectId:string;
   isDeployed: boolean;
+  isInPortfolio: boolean;
   liveLink: string | null;
   refetch: () => void;
 }) => {
-  const router = useRouter();
+
   return (
     <div
-      // onClick={() => router.push(`/dashboard/projects/myProjects/${repo.id}`)}
+      
       className="bg-[#1a1a1d] p-6 rounded-lg shadow-md hover:shadow-[0_0_10px_rgba(183,167,253,0.4)] transition duration-300 relative"
     >
       <div className="dots absolute right-5 top-3">
@@ -26,6 +30,8 @@ const RepoCard = ({
           liveLink={liveLink}
           refetch={refetch}
           isDeployed={isDeployed}
+          isInPortfolio={isInPortfolio}
+          portfolioProjectId={portfolioProjectId}
         />
       </div>
       <h2 className="text-xl font-semibold mb-2 text-indigo-400">

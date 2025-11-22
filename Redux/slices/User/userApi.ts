@@ -1,5 +1,4 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { get } from "http";
 
 export const userApi = createApi({
   reducerPath: "userApi",
@@ -15,31 +14,49 @@ export const userApi = createApi({
       return headers;
     },
   }),
+
+  tagTypes: ["User", "Portfolio"],
+
   endpoints: (builder) => ({
-    getUser: builder.query({
-      query: () => `user/profile`,
+    userSignUp: builder.mutation({
+      query: (data) => ({
+        url: "user/signup",
+        method: "POST",
+        body: data,
+      }),
     }),
+    getUser: builder.query({
+      query: (userId: string) => `user/profile/${userId}`,
+      providesTags: ["User"],
+    }),
+
     updateUser: builder.mutation({
       query: (userData) => ({
         url: `user/update`,
         method: "PUT",
         body: userData,
       }),
+      invalidatesTags: ["User"],
     }),
+
     getPortfolioData: builder.query({
-      query: () => `portfolio/getPortfolio`,
+      query: (userId: string) => `portfolio/getPortfolio/${userId}`,
+      providesTags: ["Portfolio"],
     }),
+
     updatePortfolioData: builder.mutation({
       query: (portfolioData) => ({
         url: `portfolio/updatePortfolio`,
-        method: "PUT",
+        method: `PUT`,
         body: portfolioData,
       }),
+      invalidatesTags: ["Portfolio"],
     }),
   }),
 });
 
 export const {
+  useUserSignUpMutation,
   useUpdateUserMutation,
   useGetUserQuery,
   useGetPortfolioDataQuery,
