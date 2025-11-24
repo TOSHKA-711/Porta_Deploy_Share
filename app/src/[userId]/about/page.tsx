@@ -1,6 +1,7 @@
 "use client";
 import { useGetProjectsQuery } from "@/Redux/slices/Project/projectApi";
 import { RootState } from "@/Redux/store";
+import { ProjectType } from "@/Redux/Types";
 import Image from "next/image";
 import Link from "next/link";
 import { useSelector } from "react-redux";
@@ -11,7 +12,7 @@ const Page = () => {
     data: projects,
     isLoading,
     isError,
-  } = useGetProjectsQuery(data.data?.userId);
+  } = useGetProjectsQuery(data?.data?.userId);
 
   console.log(projects, data.data?.userId);
 
@@ -162,10 +163,10 @@ const Page = () => {
 
             <div className="projects grid grid-cols-2 w-full gap-4">
               {projects?.projects
-                .filter((project) => project.isProfiled)
-                .map((project, i) => (
+                .filter((project: ProjectType) => project.isProfiled)
+                .map((project: ProjectType) => (
                   <div
-                    key={i}
+                    key={project._id}
                     className="project bg-[#1E2939] p-4 rounded-lg flex flex-col justify-start hover:scale-[1.02] hover:shadow-[0_0_12px_rgba(183,167,253,0.4)] transition duration-300"
                   >
                     <div className="title mb-2 flex items-center gap-2">
@@ -181,7 +182,7 @@ const Page = () => {
                     <p className="text-gray-400 text-xs mb-1">
                       {project.language}
                     </p>
-                    <p className="text-gray-400 text-sm mb-2">
+                    <p className="text-gray-400 text-sm mb-2 whitespace-pre-wrap break-words">
                       {project.description}
                     </p>
                     {project.features && (

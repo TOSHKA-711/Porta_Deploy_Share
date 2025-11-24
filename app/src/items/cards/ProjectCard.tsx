@@ -14,9 +14,9 @@ const ProjectCard = ({ project }: { project: ProjectType }) => {
     >
       <h1 className="text-[#7127BA] text-2xl font-bold">{project.name}</h1>
 
-      <p className="text-gray-300 text-md">
+      <p className="text-gray-300 text-md whitespace-pre-wrap break-words">
         {project.description
-          ? truncateText(project.description, 100)
+          ? truncateText(project.description, 40)
           : "No description available."}
       </p>
 

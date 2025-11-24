@@ -4,6 +4,7 @@ import Image from "next/image";
 import { RootState } from "@/Redux/store";
 import { useSelector } from "react-redux";
 import { useGetProjectsQuery } from "@/Redux/slices/Project/projectApi";
+import { ProjectType } from "@/Redux/Types";
 
 const FeaturedProjects = () => {
   const data = useSelector((state: RootState) => state.user);
@@ -24,8 +25,8 @@ const FeaturedProjects = () => {
     <div className="w-full flex flex-col items-center justify-center gap-20 pt-30">
       {projects?.projects &&
         projects.projects
-          .filter((project) => project.isFeatured)
-          .map((project, index) =>
+          .filter((project: ProjectType) => project.isFeatured)
+          .map((project: ProjectType, index: number) =>
             index == 0 || index % 2 == 0 ? (
               <div key={index} className="sec flex items-center gap-10">
                 <div className="flex flex-col items-start">
@@ -43,7 +44,7 @@ const FeaturedProjects = () => {
 
                 <div className="w-lg rounded-xl bg-red overflow-hidden shadow-xl border border-white/20">
                   <Image
-                    src={project.image.secure_url ?? "/Screenshot.png"}
+                    src={project?.image?.secure_url ?? "/Screenshot.png"}
                     alt="Project Preview"
                     width={568}
                     height={354}
@@ -71,7 +72,7 @@ const FeaturedProjects = () => {
 
                 <div className="w-lg rounded-xl bg-red overflow-hidden shadow-xl border border-white/20">
                   <Image
-                    src={project.image.secure_url ?? "/Screenshot.png"}
+                    src={project?.image?.secure_url ?? "/Screenshot.png"}
                     alt="Project Preview"
                     width={568}
                     height={354}

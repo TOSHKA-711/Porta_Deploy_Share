@@ -37,3 +37,22 @@ export interface Portfolio {
   updatedAt: string;
 }
 
+export type ProjectType = {
+  name: string;
+  description?: string;
+  githubUrl: string;
+  vercelUrl?: string;
+  image?: {
+    public_id: string;
+    secure_url: string;
+  };
+  isDeployed: boolean;
+  isFeatured?: boolean;
+  isProfiled?: boolean;
+  isComplete?: boolean;
+  _id?: string | number;
+  updatedAt?: string;
+  tools?: string[];
+  language?: string | null;
+  features?: string[];
+};

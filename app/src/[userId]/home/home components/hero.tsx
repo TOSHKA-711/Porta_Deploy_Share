@@ -71,11 +71,11 @@ const Hero = () => {
           mt-8 md:mt-16 lg:mt-24 md:w-3/4"
         >
           <h2 className="text-3xl md:text-5xl font-semibold">
-            I'm a {data?.name}. |
+            I&apos;m a {data?.name}. |
           </h2>
 
           <h4 className="text-lg">
-            Currently, I'm a {data?.role} at
+            Currently, I&apos;m a {data?.role} at
             <span className="text-[#1877F2] font-semibold flex"> Facebook</span>
           </h4>
 

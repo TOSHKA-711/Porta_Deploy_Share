@@ -1,18 +1,18 @@
-"use client";
-
 import Footer from "../components/Footer";
 import NavBar from "../components/NavBar";
 
-export default function HomeLayout({
+export default async function PortfolioLayout({
   children,
   params,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-  params: { userId: string };
-}>) {
+  params: Promise<{ userId: string }>;
+}) {
+  const resolvedParams = await params;
+
   return (
     <div>
-      <NavBar params={params}/>
+      <NavBar params={resolvedParams} />
       {children}
       <Footer />
     </div>

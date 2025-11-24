@@ -10,11 +10,12 @@ import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 
 const NavBar = ({ params }: { params: { userId: string } }) => {
-   const { userId } = React.use(params);
+  // console.log("from nav bar",params.userId);
+  const { userId } = params;
+  // console.log("from nav bar",userId);
+
   const dispatch = useDispatch();
-  const { data: userData, isSuccess: isUserSuccess } = useGetUserQuery(
-    userId
-  );
+  const { data: userData, isSuccess: isUserSuccess } = useGetUserQuery(userId);
   const { data: portfolioData, isSuccess: isPortfolioSuccess } =
     useGetPortfolioDataQuery(userId);
 
@@ -24,7 +25,7 @@ const NavBar = ({ params }: { params: { userId: string } }) => {
         setUser({
           userData: userData.user,
           portfolio: portfolioData.portfolio,
-          userId:userId,
+          userId: userId,
         })
       );
     }
@@ -35,7 +36,7 @@ const NavBar = ({ params }: { params: { userId: string } }) => {
     portfolioData,
     dispatch,
     params,
-    userId
+    userId,
   ]);
 
   // const data = useSelector((state: RootState) => state.user);

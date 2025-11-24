@@ -2,10 +2,11 @@
 import ProjectCard from "@/app/src/items/cards/ProjectCard";
 import { useGetProjectsQuery } from "@/Redux/slices/Project/projectApi";
 import { RootState } from "@/Redux/store";
+import { ProjectType } from "@/Redux/Types";
 import React from "react";
 import { useSelector } from "react-redux";
 
-const portfolio = () => {
+const Portfolio = () => {
   const data = useSelector((state: RootState) => state.user);
   const {
     data: projects,
@@ -22,16 +23,14 @@ const portfolio = () => {
   }
   return (
     <div className="portfolio bg-[#11071F] pt-30 flex flex-col gap-2 justify-start items-center text-center relative min-h-screen animate-fadeIn">
-      <h1 className="z-10  text-4xl font-bold ">
-        My Professional Portfolio
-      </h1>
+      <h1 className="z-10  text-4xl font-bold ">My Professional Portfolio</h1>
       <p className="z-10 text-gray-300 text-md mt-4 max-w-xl px-4">
         A showcase of my web development, research, and creative work — built
         with passion, precision, and purpose.
       </p>
       <div className="cards grid grid-cols-3 gap-6 mt-12 w-4/5 px-4">
         {projects && projects.projects.length > 0 ? (
-          projects.projects.map((project) => (
+          projects.projects.map((project: ProjectType) => (
             <ProjectCard key={project._id} project={project} />
           ))
         ) : (
@@ -42,4 +41,4 @@ const portfolio = () => {
   );
 };
 
-export default portfolio;
+export default Portfolio;
