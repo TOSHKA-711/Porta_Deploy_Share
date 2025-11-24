@@ -1,4 +1,4 @@
-import HomePage from "./src/[userId]/home/page";
+import HomePage from "./[userId]/home/page";
 
 export default function Home() {
   return <HomePage />;

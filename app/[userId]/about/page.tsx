@@ -75,7 +75,7 @@ const Page = () => {
           </div>
 
           <Link
-            href={`/src/${data.data?.userId}/home/#contact`}
+            href={`/${data.data?.userId}/home/#contact`}
             className="contact-btn text-black bg-[#B7A7FD] border-2 border-[#B7A7FD] py-2 px-5 rounded-md cursor-pointer mt-5 hover:bg-[#b7a7fdc2] hover:scale-105 hover:shadow-[0_0_10px_rgba(183,167,253,0.7)] transition duration-300"
           >
             Contact Me

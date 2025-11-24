@@ -59,25 +59,25 @@ const NavBar = ({ params }: { params: { userId: string } }) => {
       <div className="links flex gap-6 items-center justify-center">
         <Link
           className="hover:text-[#7c6ef1] duration-300 cursor-pointer hover:mx-1.5"
-          href={`/src/${userId}/home`}
+          href={`/${userId}/home`}
         >
           Home
         </Link>
         <Link
           className="hover:text-[#7c6ef1] duration-300 cursor-pointer hover:mx-1.5"
-          href={`/src/${userId}/about`}
+          href={`/${userId}/about`}
         >
           About
         </Link>
         <Link
           className="hover:text-[#7c6ef1] duration-300 cursor-pointer hover:mx-1.5"
-          href={`/src/${userId}/portfolio`}
+          href={`/${userId}/portfolio`}
         >
           Projects
         </Link>
         <Link
           className="hover:text-[#7c6ef1] duration-300 cursor-pointer hover:mx-1.5"
-          href={`/src/${userId}/home/#contact`}
+          href={`/${userId}/home/#contact`}
         >
           Contact
         </Link>
