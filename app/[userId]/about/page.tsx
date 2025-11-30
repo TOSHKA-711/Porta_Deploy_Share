@@ -25,10 +25,13 @@ const Page = () => {
   }
 
   return (
-    <div className="about  flex  justify-center items-start text-center min-h-screen pt-30">
+    <div className="about  flex bg-[#11071F] flex-col items-center gap-9 min-h-screen pt-30">
+       <h1 className="z-10 text-4xl font-bold ">About Me !</h1>
       <div className="container  flex gap-6 justify-center items-start text-center animate-fadeIn ">
         {/* -------- Left Card -------- */}
-        <div className="card flex-1 bg-[#0B0E1A] p-6 rounded-lg shadow-lg text-white flex flex-col items-center">
+        <div className="card flex-1 border border-white/10 rounded-xl
+              bg-gradient-to-br from-[#130428] via-[#251043] to-[#38126D] shadow-xl
+              hover:scale-[1.02] hover:shadow-purple-500/20  transition duration-300 p-6 text-white flex flex-col items-center">
           <Image
             className=" object-cover border-2 border-[#B7A7FD]"
             src={"/myimg.jpeg"}
@@ -141,12 +144,16 @@ const Page = () => {
               clean, maintainable code.
             </p>
           </div> */}
-          <div className="card text-left flex-1 bg-[#0B0E1A] p-6 rounded-lg shadow-lg text-white flex flex-col items-start">
+          <div className="card text-left flex-1 rounded-xl
+              bg-gradient-to-br from-[#130428] via-[#251043] to-[#38126D] shadow-xl
+              hover:scale-[1.02] hover:shadow-purple-500/20  transition duration-300 p-6 text-white flex flex-col items-start">
             {data?.data?.portfolio?.bio}
           </div>
 
           {/* --- Projects Section --- */}
-          <div className="card flex-1 bg-[#0B0E1A] p-6 rounded-lg shadow-lg text-white flex flex-col items-start gap-4">
+          <div className="card flex-1 rounded-xl
+              bg-gradient-to-br from-[#130428] via-[#251043] to-[#38126D] shadow-xl
+              hover:scale-[1.02] hover:shadow-purple-500/20  transition duration-300 p-6 text-white flex flex-col items-start gap-4">
             <div className="header flex w-full justify-between items-center">
               <h2 className="text-2xl font-bold text-[#B7A7FD]">Projects</h2>
               <div className="processes flex gap-6 items-center">
@@ -167,7 +174,8 @@ const Page = () => {
                 .map((project: ProjectType) => (
                   <div
                     key={project._id}
-                    className="project bg-[#1E2939] p-4 rounded-lg flex flex-col justify-start hover:scale-[1.02] hover:shadow-[0_0_12px_rgba(183,167,253,0.4)] transition duration-300"
+                    className="project bg-white/5 backdrop-blur-xl border border-white/10
+ p-4 rounded-lg flex flex-col justify-start hover:scale-[1.02] hover:shadow-[0_0_12px_rgba(183,167,253,0.4)] transition duration-300"
                   >
                     <div className="title mb-2 flex items-center gap-2">
                       <span

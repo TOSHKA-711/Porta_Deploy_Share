@@ -5,24 +5,26 @@ import Image from "next/image";
 import { useSelector } from "react-redux";
 
 const Hero = () => {
+  const data = useSelector((state: RootState) => state.user.data);
 
-  const data = useSelector((state: RootState) => state.user.data?.userData);
-
+  console.log(data);
+  
 
   return (
-    <section className="relative overflow-hidden py-16">
+    <section className="relative flex items-center justify-center py-20">
       <div className="container mx-auto relative z-10 grid gap-8">
         <div className="m-auto flex justify-center md:justify-start items-start gap-2 text-white">
           <Image width={70} height={30} src="/arrow.png" alt="arrow" />
           <h4 className="text-3xl -mt-4 ">
             Hello! I Am
             <span className="text-[#7127BA] font-semibold">
-              {" "} {data?.name}
+              {" "}
+              {data?.portfolio?.hero?.title ?? "Developer"}
             </span>
           </h4>
         </div>
         <div className="grid md:grid-cols-2 gap-6 place-items-center">
-          <div className="order-2 md:order-1 relative flex justify-center md:justify-start">
+          <div className="relative flex justify-center md:justify-start">
             <div
               className="absolute blur-[40px] z-0 left-1/2 top-1/2 
               -translate-x-1/2 -translate-y-1/2 md:left-[50%] md:top-1/2"
@@ -44,26 +46,30 @@ const Hero = () => {
             />
           </div>
 
-          <div className="order-1 md:order-2 text-center md:text-left text-white space-y-3 me-auto">
-            <h4 className="text-xl">A Designer who</h4>
+          {!data?.portfolio?.hero?.subtitle ? (
+            <div className=" text-center md:text-left text-white space-y-3 me-auto">
+              <h4 className="text-xl">A Developer who</h4>
 
-            <h2 className="text-4xl md:text-5xl font-bold w-full md:w-[380px] leading-tight">
-              Judges a book by its
-              <span
-                className="text-[#7127BA] inline-block border border-white px-5 py-1 ml-2"
-                style={{
-                  borderRadius: "83% 17% 86% 14% / 90% 14% 86% 10%",
-                }}
-              >
-                cover
-              </span>
-              ...
-            </h2>
+              <h2 className="text-4xl md:text-5xl font-bold w-full md:w-[380px] leading-tight">
+                Judges a book by its
+                <span
+                  className="text-[#7127BA] inline-block border border-white px-5 py-1 ml-2"
+                  style={{
+                    borderRadius: "83% 17% 86% 14% / 90% 14% 86% 10%",
+                  }}
+                >
+                  cover
+                </span>
+                ...
+              </h2>
 
-            <p className="text-gray-300">
-              Because if the cover does not impress you, what else can?
-            </p>
-          </div>
+              <p className="text-gray-300">
+                Because if the cover does not impress you, what else can?
+              </p>
+            </div>
+          ) : (
+            data?.portfolio?.hero?.subtitle
+          )}
         </div>
 
         <div
@@ -71,19 +77,18 @@ const Hero = () => {
           mt-8 md:mt-16 lg:mt-24 md:w-3/4"
         >
           <h2 className="text-3xl md:text-5xl font-semibold">
-            I&apos;m a {data?.name}. |
+            I&apos;m {data?.userData?.name}. |
           </h2>
 
-          <h4 className="text-lg">
-            Currently, I&apos;m a {data?.role} at
-            <span className="text-[#1877F2] font-semibold flex"> Facebook</span>
+          <h4 className="text-lg flex gap-3">
+            Currently, I&apos;m a {data?.userData?.role} at
+            <span className="text-[#1877F2] text-2xl font-semibold flex">
+              {" "}
+              {data?.portfolio?.hero?.currentPosition}
+            </span>
           </h4>
 
-          <p className="text-gray-300">
-            A self-taught UI/UX designer, functioning in the industry for 3+
-            years now. I make meaningful and delightful digital products that
-            create an equilibrium between user needs and business goals.
-          </p>
+          <p className="text-gray-300">{data?.portfolio?.hero?.description}</p>
         </div>
       </div>
     </section>

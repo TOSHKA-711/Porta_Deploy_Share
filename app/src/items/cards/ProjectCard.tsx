@@ -10,7 +10,8 @@ const ProjectCard = ({ project }: { project: ProjectType }) => {
   return (
     <div
       onClick={() => console.log(project)}
-      className="card flex flex-1 flex-col items-center justify-center gap-3 border-2 border-gray-700 rounded-lg py-4 px-8  bg-[#0E0E17] hover:scale-105 hover:border-[#7127BA] transition cursor-pointer hover:shadow-[0_0_20px_rgba(255,255,255,0.3)] duration-500"
+      className="card flex flex-1 flex-col items-center justify-center gap-3 rounded-lg py-4 px-8  bg-white/5 backdrop-blur-xl border border-white/10
+ hover:scale-105 hover:border-[#7127BA] transition cursor-pointer hover:shadow-[0_0_20px_rgba(255,255,255,0.3)] duration-500"
     >
       <h1 className="text-[#7127BA] text-2xl font-bold">{project.name}</h1>
 

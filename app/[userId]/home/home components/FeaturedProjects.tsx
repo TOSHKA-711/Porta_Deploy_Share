@@ -14,6 +14,7 @@ const FeaturedProjects = () => {
     isError,
   } = useGetProjectsQuery(data.data?.userId);
 
+
   if (isLoading) {
     return <div>Loading..</div>;
   }
@@ -22,7 +23,7 @@ const FeaturedProjects = () => {
     return <div>Failed to find Featured projects</div>;
   }
   return (
-    <div className="w-full flex flex-col items-center justify-center gap-20 pt-30">
+    <div className="w-full flex flex-col items-center justify-center gap-20 py-20">
       {projects?.projects &&
         projects.projects
           .filter((project: ProjectType) => project.isFeatured)
@@ -44,7 +45,7 @@ const FeaturedProjects = () => {
 
                 <div className="w-lg rounded-xl bg-red overflow-hidden shadow-xl border border-white/20">
                   <Image
-                    src={project?.image?.secure_url ?? "/Screenshot.png"}
+                    src={project?.image?.secure_url || "/Screenshot.png"}
                     alt="Project Preview"
                     width={568}
                     height={354}
@@ -72,7 +73,7 @@ const FeaturedProjects = () => {
 
                 <div className="w-lg rounded-xl bg-red overflow-hidden shadow-xl border border-white/20">
                   <Image
-                    src={project?.image?.secure_url ?? "/Screenshot.png"}
+                    src={project?.image?.secure_url || "/Screenshot.png"}
                     alt="Project Preview"
                     width={568}
                     height={354}

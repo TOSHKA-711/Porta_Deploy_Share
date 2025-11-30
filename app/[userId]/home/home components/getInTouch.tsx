@@ -38,9 +38,9 @@ const GetInTouch = () => {
   return (
     <div
       id="contact"
-      className="FeaturedProjects flex flex-col gap-2 justify-center items-center text-center relative mt-20"
+      className="FeaturedProjects flex flex-col gap-2 justify-center items-center text-center relative "
     >
-      <h1 className="z-10 text-[#B7A7FD] text-4xl font-bold ">Get In Touch</h1>
+      <h1 className="z-10 text-4xl font-bold ">Get In Touch</h1>
       <p className="z-10 text-gray-300 text-md mt-4 max-w-xl px-4">
         I&apos;m always open to discussing new projects, creative ideas, or
         opportunities to be part of your vision. Here are the best ways to reach
