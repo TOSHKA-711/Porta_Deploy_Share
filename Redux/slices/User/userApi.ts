@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const userApi = createApi({
   reducerPath: "userApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://porta-deploy-nodejs.vercel.app/",
+    baseUrl: "https://12834e69-2dfe-41bb-91bc-ddfceb785e7f-00-2qpnbka5hho05.riker.replit.dev/",
     prepareHeaders: (headers) => {
       if (typeof window !== "undefined") {
         const token = localStorage.getItem("token");
